@@ -19,10 +19,10 @@ before:
     operator: ===
     right: main
     else:
-    - type: respond
-      with: 01_try-again.md
-- type: respond
-  with: 01_nice-work.md
+      - type: respond
+        with: 01_try-again.md
+      - type: respond
+        with: 01_nice-work.md
 
 # Steps for the course
 # A list of steps that take the learner through the course
