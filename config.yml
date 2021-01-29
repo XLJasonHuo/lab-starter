@@ -1,6 +1,6 @@
-title: # a name for your Learning Lab course
-tagline: # a short description for your Learning Lab course, displayed on the course catalog
-description: # a longer description for your Learning Lab course, displayed on the course's landing page
+title: ZName
+tagline: learn
+description: This is learning 
 
 # Repository setup
 # The following section template information for the repository
@@ -14,9 +14,15 @@ template:
 # Actions to take place after the learner registers, but before they start interacting with their repo
 
 before:
-- type: # the type of action, full list at https://lab.github.com/docs/actions/
-  # some actions require additional options, those should appear below `type:`
-  # you can execute multiple actions in the `before` block
+- type: gate
+    left: '%payload.pull_request.base.ref%'
+    operator: ===
+    right: main
+    else:
+      - type: respond
+        with: 01_try-again.md
+      - type: respond
+        with: 01_nice-work.md
 
 # Steps for the course
 # A list of steps that take the learner through the course
@@ -26,35 +32,61 @@ steps:
 Step 1
 - title: S1
   description: This is step 1
-  event: # the event that will trigger the actions to be executed, full list at https://developer.github.com/v3/activity/events/types/
-  actions: # a list of the actions that will occur when the step is triggered by an event
-  - type: # the type of action, full list at https://lab.github.com/docs/actions
+  event: push
+  actions: 
+  - type: gate
+    left: '%payload.pull_request.title%'
+    operator: ===
+    right: add name to README
+    else:
+      - type: respond
+        with: 01_try-again.md
+
+  - type: respond
+    with: 01_nice-work.md
+
+- title: Assign yourself
+  description: Assign the first issue to yourself.
+  event: issues.assigned
+  link: 'https://github.com/XLJasonHuo/lab-starter/issues/1'
+  actions:
+  - type: gate
+    left: '%payload.pull_request.base.ref%'
+    operator: ===
+    right: main
+    else:
+    - type: respond
+      with: 01_try-again.md
+  
+  - type: respond
+  with: 01_nice-work.md
+
 
 # Step 2: EDIT HERE -INTERNAL COMMENT FOR STEP 2
 title: S2
 description: This is step 2
-#  event: # the event that will trigger the actions to be executed, full list at https://developer.github.com/v3/activity/events/types/
+event: push
 #  actions: # a list of the actions that will occur when the step is triggered by an event
 #  - type: # the type of action, full list at https://lab.github.com/docs/actions
 
 Step 3
 title: S3
 description: This is step 3
-#  event: # the event that will trigger the actions to be executed, full list at https://developer.github.com/v3/activity/events/types/
+event: push
 #  actions: # a list of the actions that will occur when the step is triggered by an event
 #  - type: # the type of action, full list at https://lab.github.com/docs/actions
 
 Step 4
 title: S4
 description: This is step 4
-#  event: # the event that will trigger the actions to be executed, full list at https://developer.github.com/v3/activity/events/types/
+event: push
 #  actions: # a list of the actions that will occur when the step is triggered by an event
 #  - type: # the type of action, full list at https://lab.github.com/docs/actions
 
 Step 5
 title: S5
 description: This is step 5
-#  event: # the event that will trigger the actions to be executed, full list at https://developer.github.com/v3/activity/events/types/
+event: push
 #  actions: # a list of the actions that will occur when the step is triggered by an event
 #  - type: # the type of action, full list at https://lab.github.com/docs/actions
 
